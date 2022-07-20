@@ -15,7 +15,7 @@ jobs:
           channel: 'stable'
       - run: flutter config --enable-web
       - run: flutter pub get
-      - run: flutter build web --release --base-href "/freezed_generator/"
+      - run: flutter build web --release --base-href "/xls_to_json/"
       - run: |
           cd build/web
           git init
