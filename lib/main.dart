@@ -25,15 +25,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'XLS to JSON',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(),
@@ -85,7 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
       for (var row in sheet!.rows) {
         for (var element in row) {
           if (element != null) {
-            twoDirArray[element.rowIndex][element.colIndex] = element.value;
+            twoDirArray[element.rowIndex][element.colIndex] =
+                element.value.toString();
           }
         }
       }
@@ -103,68 +95,81 @@ class _MyHomePageState extends State<MyHomePage> {
       {required int startRow, required int endRow, required int startCol}) {
     Map<String, dynamic> object = {};
     int i = startRow;
+    print("endRow: $endRow");
     while (i <= endRow) {
       final String? key = twoDirArray[i][startCol];
       final String keyString = "${twoDirArray[i][startCol]}";
       if (key != null) {
-        if (twoDirArray[i][maxCols - 1] == "int") {
-          object[keyString] = 0;
+        if (twoDirArray[i][maxCols - 2] == "int") {
+          // object[keyString] = getRandomInt();
+          object[keyString] =
+              int.tryParse(twoDirArray[i][maxCols - 1] as String);
           // i++;
-        } else if (twoDirArray[i][maxCols - 1] == "double") {
-          object[keyString] = 0.0;
+        } else if (twoDirArray[i][maxCols - 2] == "double") {
+          // object[keyString] = getRandomDouble();
+          object[keyString] =
+              double.tryParse(twoDirArray[i][maxCols - 1] as String);
           // i++;
-        } else if (twoDirArray[i][maxCols - 1] == "string") {
-          object[keyString] = "";
+        } else if (twoDirArray[i][maxCols - 2] == "string") {
+          // object[keyString] = getRandomString(10);
           // i++;
-        } else if (twoDirArray[i][maxCols - 1] == "id") {
-          object[keyString] = "";
+          object[keyString] = twoDirArray[i][maxCols - 1] as String;
+        } else if (twoDirArray[i][maxCols - 2] == "id") {
+          // object[keyString] = getRandomString(10);
+          object[keyString] = twoDirArray[i][maxCols - 1] as String;
           // i++;
-        } else if (twoDirArray[i][maxCols - 1] == "date") {
-          object[keyString] = "";
+        } else if (twoDirArray[i][maxCols - 2] == "date") {
+          // object[keyString] = getRandomDate().toString();
+          object[keyString] = twoDirArray[i][maxCols - 1] as String;
           // i++;
-        } else if (twoDirArray[i][maxCols - 1] == "boolean") {
-          object[keyString] = true;
+        } else if (twoDirArray[i][maxCols - 2] == "boolean") {
+          // object[keyString] = getRandomDouble();
+          object[keyString] = twoDirArray[i][maxCols - 1] as bool;
           // i++;
         }
         // else if (twoDirArray[i][maxCols - 1] == null) {
         //   object[keyString] = null;
         //   // i++;
         // }
-        else if (twoDirArray[i][maxCols - 1] == "number") {
-          object[keyString] = 0.0;
+        else if (twoDirArray[i][maxCols - 2] == "number") {
+          // object[keyString] = getRandomDouble();
+          object[keyString] =
+              int.tryParse(twoDirArray[i][maxCols - 1] as String);
           // i++;
-        } else if (twoDirArray[i][maxCols - 1] == "object") {
-          print("checking: row: $i col: ${startCol}");
+        } else if (twoDirArray[i][maxCols - 2] == "object") {
+          // print("checking: row: $i col: $startCol");
           int endIndex = i + 1;
           while (twoDirArray[endIndex][startCol] == null && endIndex < endRow) {
             // print("checking: row: $endIndex col: ${startCol} current i: $i");
+            print("checking row: $endIndex col: $startCol");
             endIndex++;
           }
 
           print(
-              " startRow: ${i + 1}, endRow: ${endIndex}, startCol: ${startCol + 1}");
+              " startRow: ${i + 1}, endRow: $endIndex, startCol: ${startCol + 1}");
           Map<String, dynamic> res = getObject(
               startRow: i + 1, endRow: endIndex, startCol: startCol + 1);
 
           object[keyString] = res;
           i = endIndex - 1;
-        } else if (twoDirArray[i][maxCols - 1] == "array") {
-          print("checking: row: $i col: ${startCol} current i: $i");
+        } else if (twoDirArray[i][maxCols - 2] == "array") {
+          // print("checking: row: $i col: ${startCol} current i: $i");
           int endIndex = i + 1;
           while (twoDirArray[endIndex][startCol] == null && endIndex < endRow) {
-            print("checking: row: $endIndex col: ${startCol} current i: $i");
+            // print("checking: row: $endIndex col: ${startCol} current i: $i");
             endIndex++;
+            print(endIndex);
           }
 
           Map<String, dynamic> res = getObject(
-              startRow: i + 1, endRow: endIndex - 1, startCol: startCol + 1);
+              startRow: i + 1, endRow: endIndex, startCol: startCol + 1);
 
           print(
               " startRow: ${i + 1}, endRow: ${endIndex - 1}, startCol: ${startCol + 1}");
           object[keyString] = [res];
           i = endIndex - 1;
         } else {
-          object[keyString] = "";
+          object[keyString] = twoDirArray[i][maxCols - 1] as String;
           // i++;
         }
       }
