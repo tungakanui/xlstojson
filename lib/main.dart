@@ -102,29 +102,28 @@ class _MyHomePageState extends State<MyHomePage> {
       if (key != null) {
         if (twoDirArray[i][maxCols - 2] == "int") {
           // object[keyString] = getRandomInt();
-          object[keyString] =
-              int.tryParse(twoDirArray[i][maxCols - 1] as String);
+          object[keyString] = int.tryParse(twoDirArray[i][maxCols - 1] ?? "0");
           // i++;
         } else if (twoDirArray[i][maxCols - 2] == "double") {
           // object[keyString] = getRandomDouble();
           object[keyString] =
-              double.tryParse(twoDirArray[i][maxCols - 1] as String);
+              double.tryParse(twoDirArray[i][maxCols - 1] ?? "0.0");
           // i++;
         } else if (twoDirArray[i][maxCols - 2] == "string") {
           // object[keyString] = getRandomString(10);
           // i++;
-          object[keyString] = twoDirArray[i][maxCols - 1] as String;
+          object[keyString] = twoDirArray[i][maxCols - 1] ?? "string";
         } else if (twoDirArray[i][maxCols - 2] == "id") {
           // object[keyString] = getRandomString(10);
-          object[keyString] = twoDirArray[i][maxCols - 1] as String;
+          object[keyString] = twoDirArray[i][maxCols - 1] ?? "id";
           // i++;
         } else if (twoDirArray[i][maxCols - 2] == "date") {
           // object[keyString] = getRandomDate().toString();
-          object[keyString] = twoDirArray[i][maxCols - 1] as String;
+          object[keyString] = twoDirArray[i][maxCols - 1] ?? "date";
           // i++;
         } else if (twoDirArray[i][maxCols - 2] == "boolean") {
           // object[keyString] = getRandomDouble();
-          object[keyString] = twoDirArray[i][maxCols - 1] as bool;
+          object[keyString] = twoDirArray[i][maxCols - 1] ?? true;
           // i++;
         }
         // else if (twoDirArray[i][maxCols - 1] == null) {
@@ -133,8 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // }
         else if (twoDirArray[i][maxCols - 2] == "number") {
           // object[keyString] = getRandomDouble();
-          object[keyString] =
-              int.tryParse(twoDirArray[i][maxCols - 1] as String);
+          object[keyString] = int.tryParse(twoDirArray[i][maxCols - 1] ?? "0");
           // i++;
         } else if (twoDirArray[i][maxCols - 2] == "object") {
           // print("checking: row: $i col: $startCol");
@@ -169,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
           object[keyString] = [res];
           i = endIndex - 1;
         } else {
-          object[keyString] = twoDirArray[i][maxCols - 1] as String;
+          object[keyString] = twoDirArray[i][maxCols - 1] ?? "value";
           // i++;
         }
       }
